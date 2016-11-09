@@ -1,0 +1,26 @@
+{
+  "name": "grow",
+  "version": "1.0.0",
+  "description": "Generator for apps that makes life easy",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/assuming/grow.git"
+  },
+  "author": "",
+  "engine": {
+    "node": ">=6.0.0",
+    "npm": ">=3.0.0"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/assuming/grow/issues"
+  },
+  "homepage": "https://github.com/assuming/grow#readme",
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
+}
