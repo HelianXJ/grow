@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+program
+	.usage('<template name> [project name] [options]')
+	.option('-r, --remote', 'create a repo on github and clone it to the local machine and init files into it')
+	.parse(process.argv)
+
+// console.log(program)
+// console.log(program.args[0], program.args[1])
+
+const templateName = program.args[0]
+const projectName = project.args[1]
+
+if (program.remote) {
+	console.log('github integration')
+}
+
