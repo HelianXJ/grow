@@ -10,9 +10,8 @@ program
 // console.log(program.args[0], program.args[1])
 
 const templateName = program.args[0]
-const projectName = project.args[1]
+const projectName = program.args[1]
 
 if (program.remote) {
 	console.log('github integration')
 }
-

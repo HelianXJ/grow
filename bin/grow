@@ -7,4 +7,7 @@ program
 	.usage('<command> [options]')
 	.command('init', 'generate a new project from a template')
 	.command('list', 'list available template from github repos')
+	.command('config', 'github information for remote initialization')
+	.command('create', 'create a repo on github and clone it down')
 	.parse(process.argv)
+	
