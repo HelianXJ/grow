@@ -1,17 +1,43 @@
 #!/usr/bin/env node
 
 const program = require('commander')
+const api = require('../src/core/api.js')
+const config = require('../src/core/config.js')
+
+/**
+ * Usage
+ */
+
 program
-	.usage('<template name> [project name] [options]')
+	.usage('<template name> <project name> [options]')
 	.option('-r, --remote', 'create a repo on github and clone it to the local machine and init files into it')
 	.parse(process.argv)
 
-// console.log(program)
-// console.log(program.args[0], program.args[1])
+/**
+ * Arguments parsing
+ */
+
+// Need 'template name' and 'project name' for init
+if (program.args.length < 2) {
+	return program.help()
+}
 
 const templateName = program.args[0]
 const projectName = program.args[1]
 
 if (program.remote) {
 	console.log('github integration')
+}
+
+api.downloadGitRepo(makeRepoURL(), `./${projectName}`)
+
+/**
+ * Utility functions
+ */
+
+function makeRepoURL() {
+	const template = templateName
+	const username = config.data.username
+
+	return `${username}/${template}`
 }
