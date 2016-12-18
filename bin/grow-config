@@ -9,14 +9,14 @@ const config = require('../src/core/config.js')
  */
 
 program
-	.usage('[options]')
-	.option('--username <name>', 'your github user name')
-	.option('-l, --list', 'list grow configs')
-	.parse(process.argv)
+  .usage('[options]')
+  .option('--username <name>', 'your github user name')
+  .option('-l, --list', 'list grow configs')
+  .parse(process.argv)
 
 // must specify an option
 if (program.rawArgs.length < 3) {
-	return program.help()
+  return program.help()
 }
 
 /**
@@ -26,8 +26,8 @@ if (program.rawArgs.length < 3) {
  */
 
 if (program.list) {
-	console.log(config.list())
-	return
+  console.log(config.list())
+  return
 }
 
 /**

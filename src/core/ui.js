@@ -5,9 +5,9 @@ const ora = require('ora')
  */
 
 exports.download = ora({
-	text: 'downloading template'
+  text: 'downloading template'
 })
 
 exports.compile = ora({
-	text: 'compiling template'
+  text: 'compiling template'
 })
