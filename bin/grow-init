@@ -1,8 +1,15 @@
 #!/usr/bin/env node
 
+const os = require('os')
 const program = require('commander')
+const ora = require('ora')
+const uid = require('uid')
+const rm = require('rimraf').sync
+const compiler = require('../src/core/compiler.js')
 const api = require('../src/core/api.js')
 const config = require('../src/core/config.js')
+const logger = require('../src/core/logger.js')
+const ui = require('../src/core/ui.js')
 
 /**
  * Usage
@@ -29,7 +36,47 @@ if (program.remote) {
 	console.log('github integration')
 }
 
-api.downloadGitRepo(makeRepoURL(), `./${projectName}`)
+downloadAndCompile()
+
+
+/**
+ * Download and Compile
+ */
+
+function downloadAndCompile() {
+	// const tmpPath = `${os.tmpdir()}/grow-template-cache-${uid()}`
+	const tmpPath = `./grow-template-cache-dev-${uid()}`
+	const targetPath = path.resolve('.')
+
+	ui.download.start()
+	api.downloadGitRepo(makeRepoURL(), tmpPath, err => {
+		if (err) {
+			ui.download.fail()
+			// TODO: logger
+			throw err
+		}
+		ui.download.succeed()
+		process.on('exit', () => {
+			// if compiling will this work ?
+			// rm(tmpPath)
+		})
+
+		ui.compile.start()
+		compiler.generate(projectName, tmpPath, targetPath, err => {
+			if (err) {
+				ui.compile.fail()
+				// TODO: logger
+				throw err
+			}
+			ui.compile.succeed()
+		})
+
+	})
+
+
+
+}
+
 
 /**
  * Utility functions
