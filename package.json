@@ -27,6 +27,8 @@
     "chalk": "^1.1.3",
     "commander": "^2.9.0",
     "download-git-repo": "^0.2.1",
+    "inquirer": "^2.0.0",
+    "metalsmith": "^2.3.0",
     "ora": "^0.3.0",
     "rimraf": "^2.5.4",
     "uid": "0.0.2"
