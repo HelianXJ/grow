@@ -6,18 +6,19 @@ const ora = require('ora')
 const uid = require('uid')
 const path = require('path')
 const rm = require('rimraf').sync
-const compile = require('../src/core/compile.js')
-const api = require('../src/core/api.js')
-const config = require('../src/core/config.js')
-const logger = require('../src/core/logger.js')
-const ui = require('../src/core/ui.js')
+const compile = require('../src/compile.js')
+const api = require('../src/api.js')
+const config = require('../src/config.js')
+const logger = require('../src/logger.js')
+const ui = require('../src/ui.js')
 
 /**
  * Usage
  */
 
 program
-	.usage('<template name> <project name>')
+	.usage('<template name> <project name> [options]')
+	.option('-i, --inplace', 'generate files in current folder')
 	.parse(process.argv)
 
 /**
@@ -31,6 +32,7 @@ if (program.args.length < 2) {
 
 const templateName = program.args[0]
 const projectName = program.args[1]
+const inPlace = program.inplace
 
 downloadAndCompile()
 
@@ -39,8 +41,9 @@ downloadAndCompile()
  */
 
 function downloadAndCompile() {
-	// const tmpPath = `${os.tmpdir()}/grow-template-cache-${uid()}`
-	const tmpPath = `./grow-template-cache-dev-${uid()}`
+	const tmpPath = `${os.tmpdir()}/grow-template-cache-${uid()}`
+	// for dev
+	// const tmpPath = `./grow-template-cache-dev-${uid()}`
 	const targetPath = path.resolve('.')
 
 	ui.download.start()
@@ -53,13 +56,13 @@ function downloadAndCompile() {
 		process.on('exit', () => rm(tmpPath))
 
 		ui.compile.start()
-		compile(projectName, tmpPath, targetPath, err => {
+		compile(inPlace, projectName, tmpPath, targetPath, err => {
 			if (err) {
 				ui.compile.fail()
 				logger.error(err)
 			}
 			ui.compile.succeed()
-			
+
 			logger.success('Grow finished! Now ready to code')
 		})
 	})

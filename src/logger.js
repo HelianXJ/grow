@@ -1,7 +1,7 @@
 const chalk = require('chalk')
 
-exports.log = function (text) {
-  const styled = chalk.white(`- grow log`)
+function log(text) {
+  const styled = chalk.white(`[ LOG ]`)
   console.log(`${styled} : ${text}`)
 }
 
@@ -10,16 +10,16 @@ exports.log = function (text) {
  *
  * The msg param could be a {String} or an Error instance
  */
-exports.error = function (msg) {
-  const styled = chalk.white(`- grow error`)
-  let text = msg instanceof Error ? msg.msg.trim() : msg
+function error(msg) {
+  const styled = chalk.red(`[ ERROR ]`)
+  let text = msg instanceof Error ? msg.message : msg
 
   console.log(`${styled} : ${text}`)
   process.exit(1)
 }
 
-exports.success = function (text) {
-  const styled = chalk.white(`- grow success`)
+function success(text) {
+  const styled = chalk.green(`[ SUCCESS ]`)
   console.log(`${styled} : ${text}`)
 }
 

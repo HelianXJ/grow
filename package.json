@@ -2,7 +2,6 @@
   "name": "grow",
   "version": "1.0.0",
   "description": "Generator for apps that makes life easy",
-  "main": "dist/index.js",
   "bin": {
     "grow": "bin/grow"
   },

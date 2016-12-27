@@ -2,7 +2,7 @@
 
 const program = require('commander')
 const util = require('util')
-const config = require('../src/core/config.js')
+const config = require('../src/config.js')
 
 /**
  * Usage

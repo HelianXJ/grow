@@ -1,4 +1,4 @@
-const query = require('../src/core/query.js')
+const query = require('../src/query.js')
 
 // fake grow.config.js
 const mockConfig = {
