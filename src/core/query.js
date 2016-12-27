@@ -3,25 +3,25 @@ const inquirer = require('inquirer')
 /**
  * Make a prompt to the user using the config data
  * 
- * @param  {Array} config
+ * @param  {Array} askData
  * @return {Promise}
  */
 
-function query(config) {
-  const _config = parsePrompt(config)
-  return inquirer.prompt(_config)
+function query(askData) {
+  const _askData = parsePrompt(askData)
+  return inquirer.prompt(_askData)
 }
 
 /**
  * Take grow.config.js config data and output the prompt configs
  * 
- * @param  {Object} config
+ * @param  {Object} askData
  * @return {Array}         
  */
 
-function parsePrompt(config) {
-  return Object.keys(config.ask).map(name => {
-    return Object.assign({}, config.ask[name], {
+function parsePrompt(askData) {
+  return Object.keys(askData).map(name => {
+    return Object.assign({}, askData[name], {
       name: name
     })
   })

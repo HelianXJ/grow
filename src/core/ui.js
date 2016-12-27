@@ -8,6 +8,12 @@ exports.download = ora({
   text: 'downloading template'
 })
 
-exports.compile = ora({
-  text: 'compiling template'
-})
+exports.compile = {
+  start() {
+    console.log('compiling now ...')
+  },
+
+  succeed() {
+    console.log('compiling finished!')
+  }
+}

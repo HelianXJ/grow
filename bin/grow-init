@@ -4,6 +4,7 @@ const os = require('os')
 const program = require('commander')
 const ora = require('ora')
 const uid = require('uid')
+const path = require('path')
 const rm = require('rimraf').sync
 const compile = require('../src/core/compile.js')
 const api = require('../src/core/api.js')
@@ -52,7 +53,7 @@ function downloadAndCompile() {
 		ui.download.succeed()
 		process.on('exit', () => {
 			// if compiling will this work ?
-			// rm(tmpPath)
+			rm(tmpPath)
 		})
 
 		ui.compile.start()
@@ -63,6 +64,7 @@ function downloadAndCompile() {
 				throw err
 			}
 			ui.compile.succeed()
+			// TODO: logger finished
 		})
 	})
 }
