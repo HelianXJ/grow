@@ -21,6 +21,7 @@ function compile(name, tmpPath, targetPath, cb) {
     .use(ask(config.ask))
     .use(filter(config.filters))
     .use(renderTpl())
+    .clean(false)
     .source('.')
     .destination(`${targetPath}/${name}`)
     .build(err => cb(err))
