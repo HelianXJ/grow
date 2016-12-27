@@ -47,24 +47,20 @@ function downloadAndCompile() {
 	api.downloadGitRepo(makeRepoURL(), tmpPath, err => {
 		if (err) {
 			ui.download.fail()
-			// TODO: logger
-			throw err
+			logger.error(err)
 		}
 		ui.download.succeed()
-		process.on('exit', () => {
-			// if compiling will this work ?
-			rm(tmpPath)
-		})
+		process.on('exit', () => rm(tmpPath))
 
 		ui.compile.start()
 		compile(projectName, tmpPath, targetPath, err => {
 			if (err) {
 				ui.compile.fail()
-				// TODO: logger
-				throw err
+				logger.error(err)
 			}
 			ui.compile.succeed()
-			// TODO: logger finished
+			
+			logger.success('Grow finished! Now ready to code')
 		})
 	})
 }
