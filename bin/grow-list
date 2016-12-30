@@ -7,7 +7,7 @@ const ui = require('../src/ui.js')
 const config = require('../src/config.js')
 
 ui.fetchRepos.start()
-api.fetchRepos(config.data.username, (err, body) => {
+api.fetchRepos(config.getData().username, (err, body) => {
   if (err) {
     ui.fetchRepos.fail()
     logger.error(err)
