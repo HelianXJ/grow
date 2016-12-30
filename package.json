@@ -2,7 +2,9 @@
   "name": "grow",
   "version": "1.0.0",
   "description": "Generator for apps that makes life easy",
-  "main": "dist/index.js",
+  "bin": {
+    "grow": "bin/grow"
+  },
   "scripts": {
     "build": ""
   },
@@ -21,6 +23,17 @@
   },
   "homepage": "https://github.com/assuming/grow#readme",
   "dependencies": {
-    "commander": "^2.9.0"
+    "chalk": "^1.1.3",
+    "commander": "^2.9.0",
+    "consolidate": "^0.14.5",
+    "download-git-repo": "^0.2.1",
+    "handlebars": "^4.0.6",
+    "inquirer": "^2.0.0",
+    "metalsmith": "^2.3.0",
+    "minimatch": "^3.0.3",
+    "ora": "^0.3.0",
+    "request": "^2.79.0",
+    "rimraf": "^2.5.4",
+    "uid": "0.0.2"
   }
 }

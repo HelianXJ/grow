@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+const util = require('util')
+const config = require('../src/config.js')
+
+/**
+ * Usage
+ */
+
+program
+  .usage('[options]')
+  .option('--username <name>', 'your github user name')
+  .option('-l, --list', 'list grow configs')
+  .parse(process.argv)
+
+// must specify an option
+if (program.rawArgs.length < 3) {
+  return program.help()
+}
+
+/**
+ * grow config -l, --list
+ * 
+ * read and print configs from '~/.growconfig'
+ */
+
+if (program.list) {
+  console.log(config.list())
+  return
+}
+
+/**
+ * grow config --key value ...
+ *
+ * set kv configs and save to '~/.growconfig'
+ */
+
+config.data.username = program.username
+config.save()

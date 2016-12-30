@@ -1,0 +1,80 @@
+#!/usr/bin/env node
+
+const os = require('os')
+const program = require('commander')
+const ora = require('ora')
+const uid = require('uid')
+const path = require('path')
+const rm = require('rimraf').sync
+const compile = require('../src/compile.js')
+const api = require('../src/api.js')
+const config = require('../src/config.js')
+const logger = require('../src/logger.js')
+const ui = require('../src/ui.js')
+
+/**
+ * Usage
+ */
+
+program
+	.usage('<template name> <project name> [options]')
+	.option('-i, --inplace', 'generate files in current folder')
+	.parse(process.argv)
+
+/**
+ * Arguments parsing
+ */
+
+// Need 'template name' and 'project name' for init
+if (program.args.length < 2) {
+	return program.help()
+}
+
+const templateName = program.args[0]
+const projectName = program.args[1]
+const inPlace = program.inplace
+
+downloadAndCompile()
+
+/**
+ * Download and Compile
+ */
+
+function downloadAndCompile() {
+	const tmpPath = `${os.tmpdir()}/grow-template-cache-${uid()}`
+	// for dev
+	// const tmpPath = `./grow-template-cache-dev-${uid()}`
+	const targetPath = path.resolve('.')
+
+	ui.download.start()
+	api.downloadGitRepo(makeRepoURL(), tmpPath, err => {
+		if (err) {
+			ui.download.fail()
+			logger.error(err)
+		}
+		ui.download.succeed()
+		process.on('exit', () => rm(tmpPath))
+
+		ui.compile.start()
+		compile(inPlace, projectName, tmpPath, targetPath, err => {
+			if (err) {
+				// ui.compile.fail()
+				logger.error(err)
+			}
+			ui.compile.succeed()
+
+			logger.success('Grow finished! Now ready to code')
+		})
+	})
+}
+
+/**
+ * Utility functions
+ */
+
+function makeRepoURL() {
+	const template = templateName
+	const username = config.data.username
+
+	return `${username}/${template}`
+}
