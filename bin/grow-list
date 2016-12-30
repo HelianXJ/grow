@@ -1,1 +1,33 @@
 #!/usr/bin/env node
+
+const chalk = require('chalk')
+const logger = require('../src/logger.js')
+const api = require('../src/api.js')
+const ui = require('../src/ui.js')
+const config = require('../src/config.js')
+
+ui.fetchRepos.start()
+api.fetchRepos(config.data.username, (err, body) => {
+  if (err) {
+    ui.fetchRepos.fail()
+    logger.error(err)
+  }
+  ui.fetchRepos.succeed()
+  
+  const _repos = JSON.parse(body)
+  if (Array.isArray(_repos)) {
+    const templateRepos = _repos.filter(repo => {
+      const re = /-gt/i
+      return re.test(repo.name)
+    })
+
+    const _title = chalk.green('Available templates on your GitHub are listed below: ')
+    console.log(`\n${_title}\n`)
+    templateRepos.forEach(repo => {
+      console.log(`  ${chalk.cyan('*')}  ${chalk.blue(repo.name)}  -  ${repo.description}`)
+    })
+    console.log()
+  } else {
+    logger.error(_repos.message)
+  }
+})

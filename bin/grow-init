@@ -58,7 +58,7 @@ function downloadAndCompile() {
 		ui.compile.start()
 		compile(inPlace, projectName, tmpPath, targetPath, err => {
 			if (err) {
-				ui.compile.fail()
+				// ui.compile.fail()
 				logger.error(err)
 			}
 			ui.compile.succeed()

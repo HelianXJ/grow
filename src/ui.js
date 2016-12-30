@@ -14,7 +14,15 @@ exports.compile = {
     logger.log('compiling now ...')
   },
 
+  fail() {
+    logger.log('compiling failed!')
+  },
+
   succeed() {
     logger.log('compiling finished!')
   }
 }
+
+exports.fetchRepos = ora({
+  text: 'Fetching templates available on your GitHub'
+})
