@@ -17,9 +17,9 @@ const ui = require('../src/ui.js')
  */
 
 program
-	.usage('<template name> <project name> [options]')
-	.option('-i, --inplace', 'generate files in current folder')
-	.parse(process.argv)
+  .usage('<template name> <project name> [options]')
+  .option('-i, --inplace', 'generate files in current folder')
+  .parse(process.argv)
 
 /**
  * Arguments parsing
@@ -27,7 +27,7 @@ program
 
 // Need 'template name' and 'project name' for init
 if (program.args.length < 2) {
-	return program.help()
+  return program.help()
 }
 
 const templateName = program.args[0]
@@ -41,31 +41,31 @@ downloadAndCompile()
  */
 
 function downloadAndCompile() {
-	const tmpPath = `${os.tmpdir()}/grow-template-cache-${uid()}`
-	// for dev
-	// const tmpPath = `./grow-template-cache-dev-${uid()}`
-	const targetPath = path.resolve('.')
+  const tmpPath = `${os.tmpdir()}/grow-template-cache-${uid()}`
+  // for dev
+  // const tmpPath = `./grow-template-cache-dev-${uid()}`
+  const targetPath = path.resolve('.')
 
-	ui.download.start()
-	api.downloadGitRepo(makeRepoURL(), tmpPath, err => {
-		if (err) {
-			ui.download.fail()
-			logger.error(err)
-		}
-		ui.download.succeed()
-		process.on('exit', () => rm(tmpPath))
+  ui.download.start()
+  api.downloadGitRepo(makeRepoURL(), tmpPath, err => {
+    if (err) {
+      ui.download.fail()
+      logger.error(err)
+    }
+    ui.download.succeed()
+    process.on('exit', () => rm(tmpPath))
 
-		ui.compile.start()
-		compile(inPlace, projectName, tmpPath, targetPath, err => {
-			if (err) {
-				// ui.compile.fail()
-				logger.error(err)
-			}
-			ui.compile.succeed()
+    ui.compile.start()
+    compile(inPlace, projectName, tmpPath, targetPath, err => {
+      if (err) {
+        // ui.compile.fail()
+        logger.error(err)
+      }
+      ui.compile.succeed()
 
-			logger.success('Grow finished! Now ready to code')
-		})
-	})
+      logger.success('Grow finished! Now ready to code')
+    })
+  })
 }
 
 /**
@@ -73,8 +73,8 @@ function downloadAndCompile() {
  */
 
 function makeRepoURL() {
-	const template = templateName
-	const username = config.getData().username
+  const template = templateName
+  const username = config.getData().username
 
-	return `${username}/${template}`
+  return `${username}/${template}`
 }
