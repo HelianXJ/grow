@@ -1,7 +1,8 @@
 {
-  "name": "grow",
+  "name": "grow-cli",
   "version": "1.0.0",
   "description": "Generator for apps that makes life easy",
+  "preferGlobal": true,
   "bin": {
     "grow": "bin/grow"
   },
