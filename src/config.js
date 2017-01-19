@@ -1,5 +1,6 @@
 const fs = require('fs')
 const util = require('util')
+const logger = require('./logger.js')
 
 /**
  * Config file path
@@ -40,6 +41,18 @@ class Config {
       JSON.stringify(this.data, null, 2),
       'utf8'
     )
+  }
+
+  getData() {
+    if (!this.data.username) {
+      logger.error('You have to set your GitHub username first, try using grow config --username xxx')
+    }
+    return this.data
+  }
+
+  setData(username) {
+    this.data.username = username
+    this.save()
   }
 
   list() {

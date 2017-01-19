@@ -36,5 +36,4 @@ if (program.list) {
  * set kv configs and save to '~/.growconfig'
  */
 
-config.data.username = program.username
-config.save()
+config.setData(program.username)

@@ -87,7 +87,7 @@ function filter(filters) {
         if (minimatch(file, glob, { dot: true })) {
           const _v = filters[glob]
 
-          if (metadata[_v]) {
+          if (!metadata[_v]) {
             delete files[file]
           }
         }

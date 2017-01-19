@@ -1,5 +1,5 @@
 # grow
-Generator for projects that makes life easy
+Generator for project that makes life easy (inspired by vue-cli)
 
 ### features
 
@@ -28,3 +28,15 @@ This is almost the same with the first one above, but instead it will create all
 - `grow list`
 
 List templates on your GitHub. Template Repos are suffixed with `'-gt'`
+
+#### Create A Template
+
+1. Create a repo on your github like 'blablabla-gt', with `'-gt'` at the end
+2. Setup your template project as usual
+3. Put a grow.config.js file inside the repo with configurations. The config file is used to fill the `{{xxx}}` inside your template. 
+
+For more information, just look into my simple vue.js template [vue-gt](https://github.com/assuming/vue-gt.git)
+
+## Upcoming features
+
+No idea XD

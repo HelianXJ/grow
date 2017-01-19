@@ -74,7 +74,7 @@ function downloadAndCompile() {
 
 function makeRepoURL() {
 	const template = templateName
-	const username = config.data.username
+	const username = config.getData().username
 
 	return `${username}/${template}`
 }
