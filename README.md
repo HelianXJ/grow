@@ -1,7 +1,8 @@
 # grow
-Generator for project that makes life easy (inspired by vue-cli)
 
-### features
+Generator for projects that makes life easy (inspired by vue-cli)
+
+## features
 
 1. Write your own custom template and store them on github
 2. Generate project from templates on github
