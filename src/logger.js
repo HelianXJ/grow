@@ -12,7 +12,7 @@ function log(text) {
  */
 function error(msg) {
   const styled = chalk.red(`[ ERROR ]`)
-  let text = msg instanceof Error ? msg.message : msg
+  const text = msg instanceof Error ? msg.message : msg
 
   console.log(`\n${styled} : ${text}`)
   process.exit(1)

@@ -3,6 +3,7 @@ const Metalsmith = require('metalsmith')
 const minimatch = require('minimatch')
 const render = require('consolidate').handlebars.render
 const query = require('./query.js')
+const logger = require('./logger.js')
 
 const cfgFileName = 'grow.config.json'
 
@@ -48,8 +49,14 @@ function compile(inPlace, name, tmpPath, targetPath, cb) {
  */
 function getConfig(tmpPath) {
   const _path = `${tmpPath}/${cfgFileName}`
+  let filedata
 
-  return JSON.parse(fs.readFileSync(_path, 'utf8'))
+  try {
+    filedata = fs.readFileSync(_path, 'utf8')
+  } catch (e) {
+    logger.error(e)
+  }
+  return JSON.parse(filedata)
 }
 
 /**
