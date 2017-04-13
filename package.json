@@ -7,7 +7,6 @@
     "grow": "bin/grow"
   },
   "scripts": {
-    "build": ""
   },
   "repository": {
     "type": "git",
@@ -36,5 +35,9 @@
     "request": "^2.79.0",
     "rimraf": "^2.5.4",
     "uid": "0.0.2"
+  },
+  "devDependencies": {
+    "blue-tape": "^1.0.0",
+    "tape": "^4.6.3"
   }
 }
