@@ -1,7 +1,7 @@
 const chalk = require('chalk')
 
-function log(text) {
-  const styled = chalk.white(`[ LOG ]`)
+exports.log = function(text) {
+  const styled = chalk.white(`📄`)
   console.log(`${styled} : ${text}`)
 }
 
@@ -10,21 +10,15 @@ function log(text) {
  *
  * The msg param could be a {String} or an Error instance
  */
-function error(msg) {
-  const styled = chalk.red(`[ ERROR ]`)
+exports.error = function(msg) {
+  const styled = chalk.red(`❌`)
   const text = msg instanceof Error ? msg.message : msg
 
   console.log(`\n${styled} : ${text}`)
   process.exit(1)
 }
 
-function success(text) {
-  const styled = chalk.green(`[ SUCCESS ]`)
+exports.success = function(text) {
+  const styled = chalk.green(`✅`)
   console.log(`${styled} : ${text}`)
-}
-
-module.exports = {
-  log,
-  error,
-  success
 }
