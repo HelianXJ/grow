@@ -4,7 +4,7 @@ const os = require('os')
 const path = require('path')
 const program = require('commander')
 const uid = require('uid')
-const rm = require('rimraf').sync
+const { empSync } = require('emp')
 
 const compile = require('../src/compile.js')
 const config = require('../src/config.js')
@@ -57,7 +57,7 @@ function downloadAndCompile() {
     }
     
     ui.download.succeed()
-    process.on('exit', () => rm(tmpPath))
+    process.on('exit', () => empSync(tmpPath, true))
 
     ui.compile.start()
     compile(inDir, projectName, tmpPath, targetPath, err => {
