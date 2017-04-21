@@ -63,7 +63,7 @@ function compile(inDir, name, tmpPath, targetPath, cb) {
  */
 
 function ask(askData) {
-  return function (files, metalsmith, cb) {
+  return (files, metalsmith, cb) => {
     let metadata = metalsmith.metadata()
     
     askUser(askData).then(answer => {
@@ -80,7 +80,7 @@ function ask(askData) {
  */
 
 function filter(filters) {
-  return function (files, metalsmith, cb) {
+  return (files, metalsmith, cb) => {
     let metadata = metalsmith.metadata()
 
     if (filters) {
@@ -106,7 +106,7 @@ function filter(filters) {
  */
 
 function cleanFiles(filenames) {
-  return function (files, metalsmith, cb) {
+  return (files, metalsmith, cb) => {
     let metadata = metalsmith.metadata()
 
     Object.keys(files).forEach(file => {
@@ -125,7 +125,7 @@ function cleanFiles(filenames) {
  */
 
 function handleReadme(isReadmeExist) {
-  return function (files, metalsmith, cb) {
+  return (files, metalsmith, cb) => {
     if (isReadmeExist) {
       let metadata = metalsmith.metadata()
 
@@ -146,7 +146,7 @@ function handleReadme(isReadmeExist) {
  * @return {Function} A metalsmith plugin function
  */
 function renderTpl() {
-  return function (files, metalsmith, cb) {
+  return (files, metalsmith, cb) => {
     let metadata = metalsmith.metadata()
 
     Object.keys(files).forEach(file => {
