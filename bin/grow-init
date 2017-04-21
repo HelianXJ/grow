@@ -42,8 +42,8 @@ downloadAndCompile()
  */
 
 function downloadAndCompile() {
-  // const tmpPath = makeTmpDir()
-  const tmpPath = makeTmpDirDev()
+  const tmpPath = makeTmpDir()
+  // const tmpPath = makeTmpDirDev()
   const targetPath = path.resolve('.')
 
   // github username
