@@ -1,5 +1,5 @@
 const ora = require('ora')
-const logger = require('./logger.js')
+const { log } = require('./logger.js')
 
 /**
  * Spinner
@@ -11,15 +11,15 @@ exports.download = ora({
 
 exports.compile = {
   start() {
-    logger.log('compiling now ...')
+    log('compiling now ...')
   },
 
   fail() {
-    logger.log('compiling failed!')
+    log('compiling failed!')
   },
 
   succeed() {
-    logger.log('compiling finished!')
+    log('compiling finished!')
   }
 }
 

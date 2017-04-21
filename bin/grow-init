@@ -1,16 +1,17 @@
 #!/usr/bin/env node
 
 const os = require('os')
-const program = require('commander')
-const ora = require('ora')
-const uid = require('uid')
 const path = require('path')
+const program = require('commander')
+const uid = require('uid')
 const rm = require('rimraf').sync
+
 const compile = require('../src/compile.js')
-const api = require('../src/api.js')
 const config = require('../src/config.js')
-const logger = require('../src/logger.js')
-const ui = require('../src/ui.js')
+const { downloadGitRepo } = require('../src/github.js')
+const { makeTmpDir, makeTmpDirDev, makeRepoURL } = require('../src/utils/utils.js')
+const { error, success } = require('../src/utils/logger.js')
+const ui = require('../src/utils/ui.js')
 
 /**
  * Usage
@@ -18,7 +19,7 @@ const ui = require('../src/ui.js')
 
 program
   .usage('<template name> <project name> [options]')
-  .option('-i, --inplace', 'generate files in current folder')
+  .option('-i, --indir', 'generate files in current folder')
   .parse(process.argv)
 
 /**
@@ -32,7 +33,7 @@ if (program.args.length < 2) {
 
 const templateName = program.args[0]
 const projectName = program.args[1]
-const inPlace = program.inplace
+const inDir = program.indir
 
 downloadAndCompile()
 
@@ -41,40 +42,32 @@ downloadAndCompile()
  */
 
 function downloadAndCompile() {
-  const tmpPath = `${os.tmpdir()}/grow-template-cache-${uid()}`
-  // for dev
-  // const tmpPath = `./grow-template-cache-dev-${uid()}`
+  // const tmpPath = makeTmpDir()
+  const tmpPath = makeTmpDirDev()
   const targetPath = path.resolve('.')
 
+  // github username
+  const username = config.getData().username
+
   ui.download.start()
-  api.downloadGitRepo(makeRepoURL(), tmpPath, err => {
+  downloadGitRepo(makeRepoURL(username, templateName), tmpPath, err => {
     if (err) {
       ui.download.fail()
-      logger.error(err)
+      error(err)
     }
+    
     ui.download.succeed()
     process.on('exit', () => rm(tmpPath))
 
     ui.compile.start()
-    compile(inPlace, projectName, tmpPath, targetPath, err => {
+    compile(inDir, projectName, tmpPath, targetPath, err => {
       if (err) {
         // ui.compile.fail()
-        logger.error(err)
+        error(err)
       }
       ui.compile.succeed()
 
-      logger.success('Grow finished! Now ready to code')
+      success('Grow finished! Now ready to code')
     })
   })
-}
-
-/**
- * Utility functions
- */
-
-function makeRepoURL() {
-  const template = templateName
-  const username = config.getData().username
-
-  return `${username}/${template}`
 }

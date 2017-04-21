@@ -1,12 +1,12 @@
 const fs = require('fs')
 const util = require('util')
-const logger = require('./logger.js')
+const { error } = require('./utils/logger.js')
 
 /**
  * Config file path
  */
 
-// Windows users can't use this method, but who cares
+// TODO: Windows user will complain about this
 const configPath = process.env.HOME + '/.growconfig'
 
 /**
@@ -14,30 +14,15 @@ const configPath = process.env.HOME + '/.growconfig'
  */
 
 class Config {
-  constructor() {
+  constructor(_path) {
+    this.path = _path
     this.data = {}
-    this.read()
-  }
-
-  read() {
-    let config = {}
-    try {
-      config = JSON.parse(fs.readFileSync(configPath, 'utf8'))
-    } catch (err) {
-      // file not found
-      if (err.code === 'ENOENT') {
-        this.save()
-      } else {
-        throw err
-      }
-    }
-
-    this.data = config
+    this._load()
   }
 
   save() {
     fs.writeFileSync(
-      configPath,
+      this.path,
       JSON.stringify(this.data, null, 2),
       'utf8'
     )
@@ -45,7 +30,7 @@ class Config {
 
   getData() {
     if (!this.data.username) {
-      logger.error('You have to set your GitHub username first, try using grow config --username xxx')
+      error('You have to set your GitHub username first, try using grow config --username xxx')
     }
     return this.data
   }
@@ -61,6 +46,19 @@ class Config {
       depth: null
     })
   }
+
+  _load() {
+    try {
+      this.data = JSON.parse(fs.readFileSync(this.path, 'utf8'))
+    } catch (err) {
+      // file not found
+      if (err.code === 'ENOENT') {
+        this.save()
+      } else {
+        throw err
+      }
+    }
+  }
 }
 
-module.exports = new Config()
+module.exports = new Config(configPath)

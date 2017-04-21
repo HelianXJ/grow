@@ -1,23 +1,23 @@
 #!/usr/bin/env node
 
 const chalk = require('chalk')
-const logger = require('../src/logger.js')
-const api = require('../src/api.js')
-const ui = require('../src/ui.js')
 const config = require('../src/config.js')
+const { fetchRepos } = require('../src/github.js')
+const { error } = require('../src/utils/logger.js')
+const ui = require('../src/utils/ui.js')
 
 ui.fetchRepos.start()
-api.fetchRepos(config.getData().username, (err, body) => {
+fetchRepos(config.getData().username, (err, body) => {
   if (err) {
     ui.fetchRepos.fail()
-    logger.error(err)
+    error(err)
   }
   ui.fetchRepos.succeed()
   
   const _repos = JSON.parse(body)
   if (Array.isArray(_repos)) {
     const templateRepos = _repos.filter(repo => {
-      const re = /-gt/i
+      const re = /-gt$/i
       return re.test(repo.name)
     })
 
@@ -28,6 +28,6 @@ api.fetchRepos(config.getData().username, (err, body) => {
     })
     console.log()
   } else {
-    logger.error(_repos.message)
+    error(_repos.message)
   }
 })
